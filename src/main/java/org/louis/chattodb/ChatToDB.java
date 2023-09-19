@@ -29,9 +29,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here sh
+// ould match an entry in the META-INF/mods.toml file
 @Mod(ChatToDB.MODID)
 public class ChatToDB {
+
     public static final String MODID = "chattodb";
 
     // Directly reference a log4j logger.

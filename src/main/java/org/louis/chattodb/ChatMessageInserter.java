@@ -7,6 +7,10 @@ import java.sql.SQLException;
 
 public class ChatMessageInserter {
 
+
+
+
+
     private Connection connection;
     // ("jdbc:mysql://localhost:3306/test", "Admin", "ZoeHeimerdinger2004");
 
@@ -23,7 +27,10 @@ public class ChatMessageInserter {
     }
 
     public static void insertChatMessage(String username, String server, int Gamemode, int x, int y, int z, String message, String MinecraftVersion, String World) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j")) {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j");
             String sql = "INSERT INTO chat_messages (UserName, Server, Gamemode, X, Y, Z, Message, MinecraftVersion, World) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username);
@@ -37,11 +44,13 @@ public class ChatMessageInserter {
             statement.setString(9, World);
             statement.executeUpdate();
             statement.close();
-            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
 
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
 
     }
 
