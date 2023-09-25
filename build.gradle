@@ -1,23 +1,26 @@
-
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "com.github.johnrengelman:shadow:8.1.1"
-
-    }
-}
-
 plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id "com.github.johnrengelman.shadow" version "8.1.1" apply true
+    id "java"
 }
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+shadowJar {
+    archiveBaseName.set('shadow')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    mergeServiceFiles()
+
+
+}
+tasks.named('shadowJar', ShadowJar) {
+    enableRelocation true
+}
 group = mod_version
 version = mod_group_id
 
@@ -40,7 +43,7 @@ minecraft {
 
         configureEach {
             workingDirectory project.file('run')
-
+            shadowJar
 
             property 'forge.logging.markers', 'REGISTRIES'
 
@@ -56,7 +59,7 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
-
+            shadowJar
         }
 
         server {
@@ -83,7 +86,17 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation 'mysql:mysql-connector-java:8.0.33'
+    shadow 'junit:junit:3.8.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.12.4'
+    implementation 'org.jdom:jdom2:2.0.6.1'
+    implementation 'org.ow2.asm:asm:6.0'
+    implementation 'org.ow2.asm:asm-commons:6.0'
+    implementation 'commons-io:commons-io:2.7'
+    implementation 'org.apache.ant:ant:1.9.16'
+    implementation 'org.codehaus.plexus:plexus-utils:3.0.16'
+
 }
+
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
@@ -103,6 +116,8 @@ tasks.named('processResources', ProcessResources).configure {
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
+
+                'Class-Path'              : '/libs/a.jar',
                 "Specification-Title"     : mod_id,
                 "Specification-Vendor"    : mod_authors,
                 "Specification-Version"   : "1",
