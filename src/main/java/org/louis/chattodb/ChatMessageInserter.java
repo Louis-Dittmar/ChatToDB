@@ -29,7 +29,7 @@ public class ChatMessageInserter {
     public static void insertChatMessage(String username, String server, int Gamemode, int x, int y, int z, String message, String MinecraftVersion, String World) {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // com.mysql.jdbc.Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded!");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j");
             String sql = "INSERT INTO chat_messages (UserName, Server, Gamemode, X, Y, Z, Message, MinecraftVersion, World) VALUES (?,?,?,?,?,?,?,?,?)";
