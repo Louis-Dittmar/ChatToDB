@@ -238,7 +238,6 @@ public class Blob implements java.sql.Blob, OutputStreamWatcher {
             throw SQLError.createSQLException(Messages.getString("Blob.6"), MysqlErrorNumbers.SQL_STATE_ILLEGAL_ARGUMENT, this.exceptionInterceptor);
         }
 
-        // TODO: Do this without copying byte[]s by maintaining some end pointer on the original data
 
         byte[] newData = new byte[(int) len];
         System.arraycopy(getBinaryData(), 0, newData, 0, (int) len);

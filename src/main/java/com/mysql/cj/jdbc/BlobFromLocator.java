@@ -167,7 +167,6 @@ public class BlobFromLocator implements java.sql.Blob {
 
     @Override
     public java.io.InputStream getBinaryStream() throws SQLException {
-        // TODO: Make fetch size configurable
         return new BufferedInputStream(new LocatorInputStream(),
                 this.creatorResultSet.getSession().getPropertySet().getMemorySizeProperty(PropertyKey.locatorFetchBufferSize).getValue());
     }
@@ -183,7 +182,7 @@ public class BlobFromLocator implements java.sql.Blob {
         byte[] bytesToWrite = new byte[length];
         System.arraycopy(bytes, offset, bytesToWrite, 0, length);
 
-        // FIXME: Needs to use identifiers for column/table names
+
         StringBuilder query = new StringBuilder("UPDATE ");
         query.append(this.tableName);
         query.append(" SET ");
@@ -206,7 +205,6 @@ public class BlobFromLocator implements java.sql.Blob {
         }
 
         try {
-            // FIXME: Have this passed in instead
             pStmt = this.creatorResultSet.getConnection().prepareStatement(query.toString());
 
             pStmt.setBytes(1, bytesToWrite);
@@ -284,7 +282,6 @@ public class BlobFromLocator implements java.sql.Blob {
         }
 
         try {
-            // FIXME: Have this passed in instead
             pStmt = this.creatorResultSet.getConnection().prepareStatement(query.toString());
 
             for (int i = 0; i < this.numPrimaryKeys; i++) {

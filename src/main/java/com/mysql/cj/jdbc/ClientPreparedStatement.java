@@ -649,7 +649,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
 
             try {
                 try {
-                    batchedStatement = /* FIXME -if we ever care about folks proxying our JdbcConnection */
+                    batchedStatement =
                             prepareBatchedInsertSQL(locallyScopedConn, numValuesPerBatch);
 
                     timeoutTask = startQueryTimer(batchedStatement, batchTimeout);
@@ -1703,7 +1703,7 @@ public class ClientPreparedStatement extends com.mysql.cj.jdbc.StatementImpl imp
         if (xmlObject == null) {
             setNull(parameterIndex, MysqlType.VARCHAR);
         } else {
-            // FIXME: Won't work for Non-MYSQL SQLXMLs
+
             setCharacterStream(parameterIndex, ((MysqlSQLXML) xmlObject).serializeAsCharacterStream());
         }
     }
