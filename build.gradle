@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id "java"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 apply plugin: 'java'
@@ -78,9 +79,10 @@ dependencies {
     implementation 'org.ow2.asm:asm-commons:6.0'
     implementation 'commons-io:commons-io:2.7'
     implementation 'org.apache.ant:ant:1.9.16'
-    implementation 'org.codehaus.plexus:plexus-utils:3.0.16'
-
     implementation 'com.mysql:mysql-connector-j:8.1.0'
+    shadow 'junit:junit:3.8.2'
+
+
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -99,6 +101,12 @@ tasks.named('processResources', ProcessResources).configure {
     }
 }
 
+shadowJar {
+    archiveBaseName.set('shadow')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
@@ -115,7 +123,15 @@ tasks.named('jar', Jar).configure {
     }
     finalizedBy 'reobfJar'
 }
+shadowJar {
+    configurations = [project.configurations.implementation]
+    archiveBaseName.set('shadow')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+

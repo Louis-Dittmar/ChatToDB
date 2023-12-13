@@ -26,6 +26,8 @@ public class ChatMessageInserter {
 
     }
 
+
+
     public static void insertChatMessage(String username, String server, int Gamemode, int x, int y, int z, String message, String MinecraftVersion, String World) {
 
         try {
