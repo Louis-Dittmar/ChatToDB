@@ -15,18 +15,11 @@ import org.slf4j.Logger;
 @Mod(ChatToDB.MODID)
 public class ChatToDB {
     public static final String MODID = "chattodb";
-    @Mod
+
     public ChatToDB() {
         // Calling insertChatMessage from ChatMessageInserter
         // register on onClientChat
         FMLJavaModLoadingContext.get().getModEventBus().register(new ChatEventHandler());
-
-        CheckConnections CheckConnections = new CheckConnections();
-        CheckConnections.CheckMySQLConnectionNormal("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j");
-        CheckConnections.CheckMySQLConnectionShadow("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j");
-        CheckConnections.CheckMySQLConnectionSlash("jdbc:mysql://localhost:3306/test", "Client", "4Nm[]qeB$7!]dN5j");
-
-
     }
 
     // Register event

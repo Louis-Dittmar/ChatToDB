@@ -79,10 +79,7 @@ dependencies {
     implementation 'org.ow2.asm:asm-commons:6.0'
     implementation 'commons-io:commons-io:2.7'
     implementation 'org.apache.ant:ant:1.9.16'
-    implementation 'com.mysql:mysql-connector-j:8.1.0'
-    shadow 'junit:junit:3.8.2'
-
-
+    shadow 'com.mysql:mysql-connector-j:8.1.0'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -102,6 +99,7 @@ tasks.named('processResources', ProcessResources).configure {
 }
 
 shadowJar {
+    configurations = [project.configurations.implementation]
     archiveBaseName.set('shadow')
     archiveClassifier.set('')
     archiveVersion.set('')
@@ -123,12 +121,7 @@ tasks.named('jar', Jar).configure {
     }
     finalizedBy 'reobfJar'
 }
-shadowJar {
-    configurations = [project.configurations.implementation]
-    archiveBaseName.set('shadow')
-    archiveClassifier.set('')
-    archiveVersion.set('')
-}
+
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
